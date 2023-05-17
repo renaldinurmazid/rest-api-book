@@ -17,12 +17,13 @@ public class BookServiceImpl implements BookService{
     @Autowired
     BookRepository bookRepository;
 
+    //POST
     @Override
     public boolean addBook(Book book) {
         bookRepository.save(book);
         return true;
     }  
-
+    //GET
     @Override
     public List<Book> getAllBook() {
         return bookRepository.getAllBook();
@@ -32,7 +33,7 @@ public class BookServiceImpl implements BookService{
     public Optional<Book> getBookById(Long id) {
         return bookRepository.getBookById(id);
     }
-
+    //PUT
     @Override
     public void update(BookRequestDTO bookRequestDTO) {
         Book book = bookRepository.findById(bookRequestDTO.getId())
@@ -45,7 +46,7 @@ public class BookServiceImpl implements BookService{
 
         bookRepository.save(book);
     }
-
+    //DELETE
     @Override
     public boolean deleteById(Long id) {
         Optional<Book> optionalBook = bookRepository.findById(id);
@@ -56,12 +57,12 @@ public class BookServiceImpl implements BookService{
             return false;
         }
     }
-
+    //GET
     @Override  
     public List<Book> searchBookByTitle(String title) {
         return bookRepository.searchBookByTitle(title);
     }
-
+    //GET
     @Override
     public List<Object[]> findAllTitleWithId() {
         return bookRepository.findAllTitleWithId();
