@@ -46,8 +46,13 @@ public class BookController {
     }
     @GetMapping
     @RequestMapping("/detail/{id}")
-    public Optional<Book> getBookById(@PathVariable("id") Long id) {
-        return bookService.getBookById(id);
+    public ResponseEntity<Object> getBookById(@PathVariable("id") Long id) {
+        Optional<Book> book = bookService.getBookById(id);
+        if (book.isPresent()) {
+            return ResponseEntity.ok(book.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book " + id + " not found");
+        }
     }
     //PUT
     @PutMapping("/{id}")
@@ -70,8 +75,13 @@ public class BookController {
 
     // GET Find by title
     @GetMapping("/search")
-    public List<Book> searchBookByTitle(@RequestParam("title") String title) {
-        return bookService.searchBookByTitle(title);
+    public ResponseEntity<Object> searchBookByTitle(@RequestParam("title") String title) {
+        List<Book> books = bookService.searchBookByTitle(title);
+        if (!books.isEmpty()) {
+            return ResponseEntity.ok(books);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book " + title + " not found");
+        }
     }
 
     //GET ALL TITLE
